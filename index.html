@@ -7,9 +7,9 @@
 <body>
 <main class="app">
 <header class="topbar"><div class="brand"><span class="brand-mark">⚔</span><span>SCROLLING &amp; STROLLING</span></div><button class="icon-button" aria-label="Menu">☰</button></header>
-<section class="game-stage"><div class="combat-scene">
-<div class="scene-bg"><div class="sky"></div><div class="far-hills"></div><div class="near-ground"></div><div class="road"></div></div>
-<div class="fighter-stage player-stage"><div class="stage-model player-model">⚔️</div><div class="stage-name">WANDERER</div><div class="stage-hp"><i id="stage-player-hp"></i></div><div class="stage-stam"><i id="stage-player-stam"></i></div></div>
+<section class="game-stage"><div class="combat-scene" id="combat-scene">
+<div class="scene-bg"><div class="sky"></div><div class="far-hills"></div><div class="near-ground"></div><div class="road"></div><div class="road-detail road-detail-a"></div><div class="road-detail road-detail-b"></div></div>
+<div class="fighter-stage player-stage" id="player-stage"><img class="stage-model player-model" src="assets/wanderer.svg" alt="Wanderer"><div class="stage-name">WANDERER</div><div class="stage-hp"><i id="stage-player-hp"></i></div><div class="stage-stam"><i id="stage-player-stam"></i></div></div>
 <div class="fighter-stage enemy-stage"><div class="stage-model enemy-model" id="stage-enemy-model">?</div><div class="stage-name" id="stage-enemy-name">THE ROAD AHEAD</div><div class="stage-hp"><i id="stage-enemy-hp"></i></div><div class="stage-stam"><i id="stage-enemy-stam"></i></div></div>
 <div class="combat-ui"><span id="stage-mode">TRAVELING</span><span>Lv <b id="level">1</b></span></div><div class="journey-line"><span></span><i></i><i></i><i></i><i></i></div>
 </div></section>
