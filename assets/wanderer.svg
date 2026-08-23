@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 96">
+<g shape-rendering="crispEdges">
+  <ellipse cx="32" cy="91" rx="18" ry="3" fill="#111" opacity=".35"/>
+  <path d="M18 48h28l6 34H12z" fill="#26313b"/>
+  <path d="M22 50h20l4 29H18z" fill="#3d4b57"/>
+  <path d="M18 53l-8 25 8 3 9-23zM46 53l8 25-8 3-9-23z" fill="#1b242d"/>
+  <path d="M24 78h7v12h-8zM35 78h7v12h-6z" fill="#171b20"/>
+  <path d="M21 89h11v4H19zM35 89h11v4H34z" fill="#101318"/>
+  <circle cx="32" cy="28" r="13" fill="#c9916e"/>
+  <path d="M19 28V17h26v12l-5-7-5 4-6-5-4 8z" fill="#20262d"/>
+  <path d="M18 20h28l-4-8H23z" fill="#35414a"/>
+  <path d="M22 13l7-7h7l8 8z" fill="#20262d"/>
+  <rect x="23" y="27" width="4" height="2" fill="#171a1e"/><rect x="37" y="27" width="4" height="2" fill="#171a1e"/>
+  <path d="M27 35h10v3H27z" fill="#8c584d"/>
+  <path d="M12 46h40l-4 8H16z" fill="#151b21"/>
+  <path d="M48 47l11 4-2 4-12-3z" fill="#222a31"/>
+  <path d="M56 47l7 2-2 4-7-2z" fill="#a7a8a0"/>
+</g></svg>
