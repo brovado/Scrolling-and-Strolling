@@ -1,25 +1,38 @@
 {
   "id": "bandit_ambush",
+  "type": "combat",
   "title": "Bandit Ambush",
   "description": "A group of bandits blocks the road.",
+  "encounter": {
+    "enemy": "bandit",
+    "count": 2
+  },
   "choices": [
     {
       "text": "Fight",
       "result": {
-        "skill": 1,
-        "fame": 1
+        "type": "combat",
+        "reward": {
+          "fame": 1
+        }
       }
     },
     {
       "text": "Avoid",
       "result": {
-        "honor": -1
+        "type": "choice",
+        "effects": {
+          "honor": -1
+        }
       }
     },
     {
       "text": "Pay Toll",
       "result": {
-        "fame": -1
+        "type": "choice",
+        "effects": {
+          "fame": -1
+        }
       }
     }
   ]
