@@ -17,10 +17,24 @@ function clearObjective(){
   $("stage-enemy-stam").style.width="0%";
 }
 function setScene(mode,enemy=null){$("stage-mode").textContent=mode;$("stage-player-hp").style.width=`${Math.max(0,player.hp/player.maxHp*100)}%`;if(enemy){$("stage-enemy-model").textContent=enemy.model;$("stage-enemy-name").textContent=enemy.name.toUpperCase();$("stage-enemy-hp").style.width=`${Math.max(0,enemy.hp/enemy.maxHp*100)}%`;}else{clearObjective();}updateStageBars();}
-function walkToObjective(e){if(transitioning)return;transitioning=true;const scene=$("combat-scene"),pc=$("player-stage"),target=$("enemy-stage");scene.classList.remove("walking","arrived");pc.classList.remove("approaching");target.classList.remove("objective-arrival");void scene.offsetWidth;scene.classList.add("walking");pc.classList.add("approaching");target.classList.add("objective-arrival");$("mode").textContent="TRAVELING";$("event-title").textContent="The Road Continues";$("event-text").textContent="You walk steadily onward...";$("choices").innerHTML="";$("stage-mode").textContent="TRAVELING";$("stage-enemy-model").textContent=e.type==="combat"?e.enemy.model:"?";$("stage-enemy-name").textContent=e.type==="combat"?e.enemy.name.toUpperCase():"THE ROAD AHEAD";$("stage-enemy-hp").style.width="0%";$("stage-enemy-stam").style.width="0%";setTimeout(()=>{scene.classList.remove("walking");pc.classList.remove("approaching");target.classList.remove("objective-arrival");scene.classList.add("arrived");setTimeout(()=>{scene.classList.remove("arrived");transitioning=false;if(e.type==="combat")startBattle(e.enemy);else showEncounter(e);},300);},1150);}
-function nextEncounter(){if(battle&&battle.running)return;battle=null;const e=encounters[Math.floor(Math.random()*encounters.length)];$("mode").textContent="TRAVELING";$("event-title").textContent="The Road Continues";$("event-text").textContent="You walk steadily onward...";$("choices").innerHTML="";setScene("TRAVELING");walkToObjective(e);}
+function walkToObjective(e){
+  if(transitioning)return;
+  transitioning=true;
+  const scene=$("combat-scene"),pc=$("player-stage"),target=$("enemy-stage");
+  scene.classList.remove("walking","arrived");pc.classList.remove("approaching");target.classList.remove("objective-arrival");
+  clearObjective();
+  $("mode").textContent="TRAVELING";$("event-title").textContent="The Road Continues";$("event-text").textContent="You walk steadily onward...";$("choices").innerHTML="";$("stage-mode").textContent="TRAVELING";
+  void scene.offsetWidth;scene.classList.add("walking");pc.classList.add("approaching");
+  setTimeout(()=>{
+    scene.classList.remove("walking");pc.classList.remove("approaching");scene.classList.add("arrived");
+    if(e.type==="combat")setScene("ENCOUNTER",e.enemy);else{setScene("ENCOUNTER");$("stage-enemy-model").textContent="?";$("stage-enemy-name").textContent="THE ROAD AHEAD";}
+    $("mode").textContent="ENCOUNTER";$("event-title").textContent=e.title;$("event-text").textContent=e.text;
+    setTimeout(()=>{scene.classList.remove("arrived");transitioning=false;if(e.type==="combat")startBattle(e.enemy);else showEncounter(e);},500);
+  },1150);
+}
+function nextEncounter(){if(battle&&battle.running)return;battle=null;clearObjective();const e=encounters[Math.floor(Math.random()*encounters.length)];$("mode").textContent="TRAVELING";$("event-title").textContent="The Road Continues";$("event-text").textContent="You walk steadily onward...";$("choices").innerHTML="";setScene("TRAVELING");walkToObjective(e);}
 function showEncounter(e){setScene("A DECISION");$("mode").textContent="THE ROAD AHEAD";$("event-title").textContent=e.title;$("event-text").textContent=e.text;buttons(e.choices.map(c=>({text:c.text,action:()=>resolveChoice(c)})));}
-function resolveChoice(c){Object.entries(c.effect||{}).forEach(([k,v])=>player[k]+=v);updateStats();$("mode").textContent="THE ROAD CONTINUES";$("event-title").textContent="Your Path Changes";$("event-text").textContent=c.result;buttons([{text:"Continue walking",action:nextEncounter}]);setScene("TRAVELING");}
+function resolveChoice(c){Object.entries(c.effect||{}).forEach(([k,v])=>player[k]+=v);updateStats();$("mode").textContent="THE ROAD CONTINUES";$("event-title").textContent="Your Path Changes";$("event-text").textContent=c.result;buttons([{text:"Continue walking",action:nextEncounter}]);setScene("TRAVELING");clearObjective();}
 function startBattle(template){battle={enemy:{...template,maxHp:template.hp},playerMeter:0,enemyMeter:0,lastTime:performance.now(),running:true};$("mode").textContent="RESOLVING COMBAT";$("event-title").textContent="Combat is resolving...";$("event-text").textContent="Your actions are automatic. Watch the battle above.";$("choices").innerHTML="";setScene("COMBAT",battle.enemy);requestAnimationFrame(combatLoop);}
 function damage(a,d){return Math.max(1,a.attack-d.defense+Math.floor(Math.random()*3));}
 function combatLoop(now){if(!battle||!battle.running)return;const dt=Math.min(.05,(now-battle.lastTime)/1000);battle.lastTime=now;battle.playerMeter=Math.min(100,battle.playerMeter+dt*player.speed*4);battle.enemyMeter=Math.min(100,battle.enemyMeter+dt*battle.enemy.speed*4);if(battle.playerMeter>=100||battle.enemyMeter>=100){if(battle.playerMeter>=100&&battle.enemyMeter>=100){if(player.speed>=battle.enemy.speed)doPlayerAttack();else doEnemyAttack();}else if(battle.playerMeter>=100)doPlayerAttack();else doEnemyAttack();if(!battle||!battle.running)return;}updateCombatBars();updateStageBars();requestAnimationFrame(combatLoop);}
