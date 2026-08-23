@@ -1,0 +1,26 @@
+{
+  "id": "bandit_ambush",
+  "title": "Bandit Ambush",
+  "description": "A group of bandits blocks the road.",
+  "choices": [
+    {
+      "text": "Fight",
+      "result": {
+        "skill": 1,
+        "fame": 1
+      }
+    },
+    {
+      "text": "Avoid",
+      "result": {
+        "honor": -1
+      }
+    },
+    {
+      "text": "Pay Toll",
+      "result": {
+        "fame": -1
+      }
+    }
+  ]
+}
